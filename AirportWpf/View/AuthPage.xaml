@@ -1,0 +1,46 @@
+﻿<Page x:Class="AirportWpf.View.AuthPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AirportWpf.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AuthPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="450"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Fill="#E3E3E3"/>
+        <TextBlock Grid.Column="0" Text="Система диспетчера аэропорта" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="32" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Логин: " VerticalAlignment="Center" FontSize="20"></TextBlock>
+                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+                    <TextBox x:Name="LoginTextBox" VerticalAlignment="Center" Width="100" FontSize="16"/>
+                    <Ellipse x:Name="ErrorLogin" Fill="White" Width="5" Height="5" Margin="5"/>
+                </StackPanel>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Пароль: " VerticalAlignment="Center" FontSize="20"></TextBlock>
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                    <PasswordBox x:Name="PasswordBox1" VerticalAlignment="Center" Width="100" FontSize="16"></PasswordBox>
+                    <Ellipse x:Name="ErrorPassword" Fill="White" Width="5" Height="5" Margin="5"/>
+                </StackPanel>
+            </Grid>
+            <Button Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                x:Name="LoginButton" Click="LoginButton_Click">Вход</Button>
+        </StackPanel>
+    </Grid>
+</Page>

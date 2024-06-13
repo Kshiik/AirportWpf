@@ -1,0 +1,65 @@
+﻿<Page x:Class="AirportWpf.View.EditPassengerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AirportWpf.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EditPassengerPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="350"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Редактировать пассажира" FontSize="32" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"></TextBlock>
+
+        <Grid Grid.Row="1" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" FontSize="16" VerticalAlignment="Center">Фамилия:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="1" FontSize="16" VerticalAlignment="Center">Имя:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="2" FontSize="16" VerticalAlignment="Center">Отчество:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="3" FontSize="16" VerticalAlignment="Center">Дата рождения:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="4" FontSize="16" VerticalAlignment="Center">Номер паспорта(NNNN-NNNNNN):</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="5" FontSize="16" VerticalAlignment="Center">Место выдачи паспорта:</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="6" FontSize="16" VerticalAlignment="Center">Дата выдачи паспорта:</TextBlock>
+
+            <TextBox x:Name="FirstNameTextBox" Grid.Column="1" Grid.Row="0" FontSize="16" VerticalAlignment="Center" Height="30" Padding="5 2"/>
+            <TextBox x:Name="LastNameTextBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Height="30" Padding="5 2"/>
+            <TextBox x:Name="PatronymicTextBox" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Height="30" Padding="5 2"/>
+            <DatePicker Name="datePicker1" Focusable="False" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
+                <DatePicker.Resources>
+                    <Style TargetType="DatePickerTextBox">
+                        <EventSetter Event="MouseLeftButtonUp" Handler="OnMouseLeftButtonUp" />
+                    </Style>
+                </DatePicker.Resources>
+            </DatePicker>
+            <TextBox x:Name="PasportNumberTextBox" Grid.Column="1"  Grid.Row="4" FontSize="16" VerticalAlignment="Center" Height="30" Padding="5 2"/>
+            <TextBox x:Name="PlaceOfIssuePassportTextBox" Grid.Column="1"  Grid.Row="5" FontSize="16" VerticalAlignment="Center" Height="30" Padding="5 2"/>
+            <DatePicker Name="datePicker2" Focusable="False" Grid.Column="1"  Grid.Row="6" VerticalAlignment="Center">
+                <DatePicker.Resources>
+                    <Style TargetType="DatePickerTextBox">
+                        <EventSetter Event="MouseLeftButtonUp" Handler="DatePickerTextBox_MouseLeftButtonUp" />
+                    </Style>
+                </DatePicker.Resources>
+            </DatePicker>
+        </Grid>
+        <Button Grid.Row="2" Content="Редактировать" x:Name="EditButton" Click="EditButton_Click"
+                HorizontalAlignment="Center" VerticalAlignment="Top"></Button>
+    </Grid>
+</Page>

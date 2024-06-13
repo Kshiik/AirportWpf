@@ -1,0 +1,292 @@
+﻿<Page x:Class="AirportWpf.View.PassengersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AirportWpf.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PassengersPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Fill="#5C6BC0"/>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" x:Name="AllPassengerButton" Click="AllPassengerButton_Click" Background="#5C6BC0" Height="40" Width="100">
+                <StackPanel>
+                    <Image Source="../Assets/Images/icon-passenger.png" Width="20"/>
+                    <TextBlock Text="Пассажиры" FontSize="10"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="1" x:Name="FlightPageButton" Click="FlightPageButton_Click" Background="#5C6BC0" Height="40" Width="100">
+                <StackPanel>
+                    <Image Source="../Assets/Images/icon-flight.png" Width="25"/>
+                    <TextBlock Text="Рейсы" FontSize="10"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="3" x:Name="TicketPageButton" Click="TicketPageButton_Click" Background="#5C6BC0" Height="40" Width="100">
+                <StackPanel>
+                    <Image Source="../Assets/Images/icon-ticket2.png" Width="20" />
+                    <TextBlock Text="Билеты" FontSize="10"></TextBlock>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <!--название страницы и поиск-->
+        <StackPanel Grid.Row="1">
+            <TextBlock Grid.Row="1" Text="Пассажиры" FontSize="32" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"></TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel x:Name="CheckBoxStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 30 0" Visibility="Visible">
+                    <CheckBox x:Name="PassengerCheckBox" Checked="PassengerCheckBox_Checked" Unchecked="PassengerCheckBox_Unchecked" Height="15"></CheckBox>
+                    <TextBlock FontSize="20" Margin="5">Зарегистрированные пассажиры</TextBlock>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center"  Margin="5">
+                        <TextBlock FontSize="20">Поиск по:</TextBlock>
+                        <ComboBox x:Name="FilterCombBox" Width="150" Margin="5 0 0 0">
+                            <TextBlock >ФИО</TextBlock>
+                            <TextBlock >По серии и номеру паспорта</TextBlock>
+                        </ComboBox>
+                    </StackPanel>
+                    <TextBox x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" Width="150" Margin="5"></TextBox>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- list с зарегистрированными пассажирами для admin -->
+        <ListView Grid.Row="2" x:Name="PassengerListViewAdmin" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Visibility="Visible">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <!--элемент списка-->
+                <DataTemplate>
+                    <Border Margin="20 5" BorderBrush="#EFE1CC" BorderThickness="20" CornerRadius="15">
+                        <StackPanel Orientation="Vertical" Background="#EFE1CC" Width="800">
+                            <Grid Margin="10 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="250"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Информация о пассажире-->
+                                <StackPanel Grid.Column="0" Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Passenger.FirstName}" FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Passenger.LastName, StringFormat=' {0}'}" FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Passenger.Patronymic, StringFormat=' {0}'}" FontSize="16" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Дата рождения:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding Passenger.DateOfBirth, StringFormat=dd.MM.yyyy}" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Серия и номер паспорта:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding Passenger.PasportNumber}" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Дата выдачи паспорта:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding Passenger.DateOfIssuePassport, StringFormat=dd.MM.yyyy}" FontSize="16" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Passenger.PlaceOfIssuePassport,StringFormat='Место выдачи паспорта: {0}'}" FontSize="16" TextWrapping="Wrap"/>
+                                   
+                                </StackPanel>
+                                <!--Информация о рейсе-->
+                                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 20 0 0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Номер рейса:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding Flight.NumberFlight}" FontSize="16"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Booking.CodeBooking, StringFormat='Номер бронирования: {0}'}" FontSize="16" TextWrapping="Wrap"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0 20 0 0">
+                                    <Button Content="Билет" x:Name="TicketButton" Click="TicketButton_Click" Style="{StaticResource StyleButtonList}"></Button>
+                                    <Button Content="Отмена регистрации" x:Name="CancelOfRegistrationButton" Click="CancelOfRegistrationButton_Click" Style="{StaticResource StyleButtonList}" Margin="5"></Button>
+                                    <Button Content="Редактировать пассажира" Style="{StaticResource StyleButtonList}" x:Name="EditPassengerButton" Click="EditPassengerButton_Click" Margin="5 0 5 5"></Button>
+                                    <Button Content="Удалить пассажира" x:Name="DeletPassengerButton" Click="DeletPassengerButton_Click" Style="{StaticResource StyleButtonList}"></Button>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- list с незарегистрированными пассажирами для admin -->
+        <ListView Grid.Row="2" x:Name="UnregisteredPassengerListViewAdmin" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <!--элемент списка-->
+                <DataTemplate>
+                    <Border Margin="20 5" BorderBrush="#EFE1CC" BorderThickness="20" CornerRadius="15">
+                        <StackPanel Orientation="Vertical" Background="#EFE1CC" Width="800">
+                            <Grid Margin="10 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="420"/>
+                                    <ColumnDefinition Width="350"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Информация о пассажире-->
+                                <StackPanel Grid.Column="0" Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding FirstName}" FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding LastName, StringFormat=' {0}'}" FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Patronymic, StringFormat=' {0}'}" FontSize="16" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Дата рождения:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Серия и номер паспорта:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding PasportNumber}" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Дата выдачи паспорта:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding DateOfIssuePassport, StringFormat=dd.MM.yyyy}" FontSize="16" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding PlaceOfIssuePassport,StringFormat='Место выдачи паспорта: {0}'}" FontSize="16" TextWrapping="Wrap"/>
+
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20 20 0 0">
+                                    <Button Content="Зарегистриовать пассажира на рейс" x:Name="RegisterPassenger" Click="RegisterPassenger_Click" Style="{StaticResource StyleButtonList}"></Button>
+                                    <Button Content="Редактировать пассажира" Style="{StaticResource StyleButtonList}" x:Name="EditPassengerButton2" Click="EditPassengerButton2_Click" Margin="5"></Button>
+                                    <Button Content="Удалить пассажира" x:Name="DeletPassengerButton2" Click="DeletPassengerButton2_Click" Style="{StaticResource StyleButtonList}"></Button>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- list с пассажирами для dispetcher -->
+        <ListView Grid.Row="2" x:Name="PassengerListViewDispetcher" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <!--элемент списка-->
+                <DataTemplate>
+                    <Border Margin="20 5" BorderBrush="#EFE1CC" BorderThickness="20" CornerRadius="15">
+                        <StackPanel Orientation="Vertical" Background="#EFE1CC" Width="800">
+                            <Grid Margin="10 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="250"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Информация о пассажире-->
+                                <StackPanel Grid.Column="0" Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Passenger.FirstName}" FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Passenger.LastName, StringFormat=' {0}'}" FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Passenger.Patronymic, StringFormat=' {0}'}" FontSize="16" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Дата рождения:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding Passenger.DateOfBirth, StringFormat=dd.MM.yyyy}" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Серия и номер паспорта:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding Passenger.PasportNumber}" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Дата выдачи паспорта:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding Passenger.DateOfIssuePassport, StringFormat=dd.MM.yyyy}" FontSize="16" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Passenger.PlaceOfIssuePassport,StringFormat='Место выдачи паспорта: {0}'}" FontSize="16" TextWrapping="Wrap"/>
+
+                                </StackPanel>
+                                <!--Информация о рейсе-->
+                                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 20 0 0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Номер рейса:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding Flight.NumberFlight}" FontSize="16"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Booking.CodeBooking, StringFormat='Номер бронирования: {0}'}" FontSize="16" TextWrapping="Wrap"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0 20 0 0">
+                                    <Button Content="Билет" x:Name="TicketButton" Click="TicketButton_Click" Style="{StaticResource StyleButtonList}"></Button>
+                                    <Button Content="Отмена регистрации" x:Name="CancelOfRegistrationButton" Click="CancelOfRegistrationButton_Click" Style="{StaticResource StyleButtonList}" Margin="5"></Button>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- list с незарегистрированными пассажирами для dispetcher -->
+        <ListView Grid.Row="2" x:Name="UnregisteredPassengerListViewDispetcher" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <!--элемент списка-->
+                <DataTemplate>
+                    <Border Margin="20 5" BorderBrush="#EFE1CC" BorderThickness="20" CornerRadius="15">
+                        <StackPanel Orientation="Vertical" Background="#EFE1CC" Width="800">
+                            <Grid Margin="10 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="420"/>
+                                    <ColumnDefinition Width="350"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Информация о пассажире-->
+                                <StackPanel Grid.Column="0" Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding FirstName}" FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding LastName, StringFormat=' {0}'}" FontSize="16" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Patronymic, StringFormat=' {0}'}" FontSize="16" FontWeight="Bold"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Дата рождения:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding DateOfBirth, StringFormat=dd.MM.yyyy}" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Серия и номер паспорта:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding PasportNumber}" FontSize="16"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Дата выдачи паспорта:" FontSize="16" Margin="0 0 5 0" VerticalAlignment="Bottom"/>
+                                        <TextBlock Text="{Binding DateOfIssuePassport, StringFormat=dd.MM.yyyy}" FontSize="16" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding PlaceOfIssuePassport,StringFormat='Место выдачи паспорта: {0}'}" FontSize="16" TextWrapping="Wrap"/>
+
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20 20 0 0">
+                                    <Button Content="Зарегистриовать пассажира на рейс" x:Name="RegisterPassenger" Click="RegisterPassenger_Click" Style="{StaticResource StyleButtonList}"></Button>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+    </Grid>
+</Page>

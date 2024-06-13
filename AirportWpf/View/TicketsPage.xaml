@@ -1,0 +1,82 @@
+﻿<Page x:Class="AirportWpf.View.TicketsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AirportWpf.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TicketsPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0" Fill="#5C6BC0"/>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" x:Name="AllPassengerButton" Click="AllPassengerButton_Click" Background="#5C6BC0" Height="40" Width="100">
+                <StackPanel>
+                    <Image Source="../Assets/Images/icon-passenger.png" Width="20"/>
+                    <TextBlock Text="Пассажиры" FontSize="10"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="1" x:Name="FlightPageButton" Click="FlightPageButton_Click" Background="#5C6BC0" Height="40" Width="100">
+                <StackPanel>
+                    <Image Source="../Assets/Images/icon-flight.png" Width="25"/>
+                    <TextBlock Text="Рейсы" FontSize="10"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="3" x:Name="TicketPageButton" Click="TicketPageButton_Click" Background="#5C6BC0" Height="40" Width="100">
+                <StackPanel>
+                    <Image Source="../Assets/Images/icon-ticket2.png" Width="20" />
+                    <TextBlock Text="Билеты" FontSize="10"></TextBlock>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <TextBlock Grid.Row="1" Text="Билеты" FontSize="32" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"></TextBlock>
+
+        <!--list с билетами-->
+        <ListView Grid.Row="2" x:Name="TicketsListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <!--элемент списка-->
+                <DataTemplate>
+                    <Border Margin="20 5" Width="420" BorderBrush="#CBD5E5" BorderThickness="20" CornerRadius="15">
+                        <StackPanel Orientation="Vertical" Background="#CBD5E5">
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding NumberTicket, StringFormat='Номер билета: {0}'}" FontSize="16" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Flight.NumberFlight, StringFormat='Рейс: {0}'}" FontSize="16"/>
+                                    <TextBlock Text="{Binding Booking.CodeBooking, StringFormat='Номер бронирования: {0}'}" FontSize="16" TextWrapping="Wrap"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Passenger.FirstName}" FontSize="16"/>
+                                        <TextBlock Text="{Binding Passenger.LastName, StringFormat = ' {0}'}" FontSize="16"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Border BorderBrush="White" BorderThickness="10" CornerRadius="5" Margin="10 0 0 0">
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Width="100">
+                                        <TextBlock Text="{Binding Price, StringFormat='Цена - {0} руб.'}" FontSize="18" TextAlignment="Center" TextWrapping="Wrap" Padding="5 10"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Width="360" Margin="0 5 0 0">
+                                <Button Content="Вывод в word-документ" x:Name="WordDocumentButton" Click="WordDocumentButton_Click" Style="{StaticResource StyleButtonList}" HorizontalAlignment="Right"></Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>
